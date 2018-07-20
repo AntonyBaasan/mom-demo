@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExecutionEngineLibrary", "E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MqWrapper", "..\MqWrapper\MqWrapper\MqWrapper.csproj", "{35D84B4E-5F96-4085-A47D-76098497867C}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitMqWrapper", "..\MqWrapper\RabbitMqWrapper\RabbitMqWrapper.csproj", "{75D12969-3063-4B6A-82A4-2FD553404AFF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{35D84B4E-5F96-4085-A47D-76098497867C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35D84B4E-5F96-4085-A47D-76098497867C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35D84B4E-5F96-4085-A47D-76098497867C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75D12969-3063-4B6A-82A4-2FD553404AFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75D12969-3063-4B6A-82A4-2FD553404AFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75D12969-3063-4B6A-82A4-2FD553404AFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75D12969-3063-4B6A-82A4-2FD553404AFF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

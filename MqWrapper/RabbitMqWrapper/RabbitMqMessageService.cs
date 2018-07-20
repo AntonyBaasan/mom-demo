@@ -2,6 +2,7 @@
 using System.Text;
 using MqService;
 using MqService.Messages;
+using MqWrapper.Messages;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -11,11 +12,10 @@ namespace RabbitMqService
     public class RabbitMqMessageService : IMessageService
     {
         private ConnectionFactory factory;
-        //private readonly string connection = "http://192.168.99.100:8080";
 
-        public virtual void Start(string connection)
+        public RabbitMqMessageService(string connection, int port)
         {
-            factory = new ConnectionFactory() { HostName = connection };
+            factory = new ConnectionFactory() { HostName = connection, Port = port };
         }
 
         public void Publish(IMessage message)
@@ -48,11 +48,11 @@ namespace RabbitMqService
             return null;
         }
 
-        private void BroadcastToRabbit(string queueName, bool durable, object content)
+        private void BroadcastToRabbit(string queueName, bool durable, Payload payload)
         {
         }
 
-        private void QueueToRabbit(string queueName, bool durable, object content)
+        private void QueueToRabbit(string queueName, bool durable, Payload payload)
         {
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
@@ -63,7 +63,7 @@ namespace RabbitMqService
                     autoDelete: false,
                     arguments: null);
 
-                string contentAsJsonString = JsonConvert.SerializeObject(content);
+                string contentAsJsonString = JsonConvert.SerializeObject(payload);
                 var jsonPayload = Encoding.UTF8.GetBytes(contentAsJsonString);
 
                 channel.BasicPublish(exchange: "",
@@ -75,7 +75,6 @@ namespace RabbitMqService
 
         public void ListenMessage<T>(Action callback) where T : IMessage
         {
-
             MessageAttribute messageAttribute = GetMessageAttribute(typeof(T));
             if (messageAttribute == null)
             {
@@ -84,6 +83,7 @@ namespace RabbitMqService
 
             if (messageAttribute.IsBroadcast)
             {
+                //TODO: should it has to be different?
             }
             else
             {

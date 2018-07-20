@@ -1,5 +1,4 @@
 ﻿using System;
-using ExecutionEngineLibrary;
 using MqService;
 using MqService.Messages;
 
@@ -13,7 +12,7 @@ namespace NlpLibrary
         {
             _messageService = messageService;
 
-            InitListeners();
+            //InitListeners();
         }
 
         private void InitListeners()
@@ -29,16 +28,17 @@ namespace NlpLibrary
             //TODO: use SimpleParser or Chatbot to get FFO
             Intent intent = SendRequestToSimpleParserOrChatbot(text);
 
-            IExecutionObject execObj = ParseIntentToExecutionObject(intent);
+            //IExecutionObject execObj = ParseIntentToExecutionObject(intent);
 
-            _messageService.Publish(new BasicMessage { Payload = execObj });
-
+            var message = new BasicMessage();
+            message.SetContent(text);
+            _messageService.Publish(message);
         }
 
-        private IExecutionObject ParseIntentToExecutionObject(Intent intent)
-        {
-            throw new NotImplementedException();
-        }
+        //private IExecutionObject ParseIntentToExecutionObject(Intent intent)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         private Intent SendRequestToSimpleParserOrChatbot(string text)
         {

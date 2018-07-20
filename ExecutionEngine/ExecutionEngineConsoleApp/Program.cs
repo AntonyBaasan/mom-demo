@@ -1,4 +1,7 @@
 ﻿using System;
+using ExecutionEngineLibrary;
+using MqService;
+using RabbitMqService;
 
 namespace ExecutionEngineConsoleApp
 {
@@ -6,7 +9,14 @@ namespace ExecutionEngineConsoleApp
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var connectionString = "192.168.99.100"; 
+            var port = 5672;
+
+            IMessageService messageService = new RabbitMqMessageService(connectionString, port);
+            ExecutionEngine engine = new ExecutionEngine(messageService);
+
+            Console.ReadKey();
+
         }
     }
 }

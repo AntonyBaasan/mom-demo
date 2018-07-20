@@ -5,4 +5,10 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\MqWrapper\MqWrapper\MqWrapper.csproj" />
+    <ProjectReference Include="..\..\MqWrapper\RabbitMqWrapper\RabbitMqWrapper.csproj" />
+    <ProjectReference Include="..\NlpService\NlpLibrary.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NlpLibrary", "NlpService\Nl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MqWrapper", "..\MqWrapper\MqWrapper\MqWrapper.csproj", "{DA686E1C-21CD-4936-8955-E32D9B986B65}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitMqWrapper", "..\MqWrapper\RabbitMqWrapper\RabbitMqWrapper.csproj", "{3E11DF75-3896-4B4B-A8EF-8CC7139FB69E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{DA686E1C-21CD-4936-8955-E32D9B986B65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA686E1C-21CD-4936-8955-E32D9B986B65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA686E1C-21CD-4936-8955-E32D9B986B65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E11DF75-3896-4B4B-A8EF-8CC7139FB69E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E11DF75-3896-4B4B-A8EF-8CC7139FB69E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E11DF75-3896-4B4B-A8EF-8CC7139FB69E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E11DF75-3896-4B4B-A8EF-8CC7139FB69E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
