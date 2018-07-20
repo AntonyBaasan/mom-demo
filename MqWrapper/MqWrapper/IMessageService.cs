@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using MqService.Messages;
 
 namespace MqService
 {
     public interface IMessageService
     {
-        void Start();
+        void Start(string connection);
 
         void Publish(IMessage message);
 

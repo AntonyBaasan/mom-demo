@@ -6,5 +6,6 @@ namespace MqService.Messages
 {
     public interface IMessage
     {
+        object GetPayload();
     }
 }
