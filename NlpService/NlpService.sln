@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2042
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NlpConsoleApp", "NlpConsoleApp\NlpConsoleApp.csproj", "{9B3525E4-4ABD-41D9-BAC6-E2EBE3F4A751}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NlpWindowsService", "NlpWindowsService\NlpWindowsService.csproj", "{6C665B00-8724-4719-A1E6-81B887F081B6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NlpLibrary", "NlpService\NlpLibrary.csproj", "{DF87874B-2B50-4ADF-8008-194CCD6CBB31}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MqWrapper", "..\MqWrapper\MqWrapper\MqWrapper.csproj", "{DA686E1C-21CD-4936-8955-E32D9B986B65}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9B3525E4-4ABD-41D9-BAC6-E2EBE3F4A751}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B3525E4-4ABD-41D9-BAC6-E2EBE3F4A751}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B3525E4-4ABD-41D9-BAC6-E2EBE3F4A751}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B3525E4-4ABD-41D9-BAC6-E2EBE3F4A751}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C665B00-8724-4719-A1E6-81B887F081B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C665B00-8724-4719-A1E6-81B887F081B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C665B00-8724-4719-A1E6-81B887F081B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C665B00-8724-4719-A1E6-81B887F081B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF87874B-2B50-4ADF-8008-194CCD6CBB31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF87874B-2B50-4ADF-8008-194CCD6CBB31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF87874B-2B50-4ADF-8008-194CCD6CBB31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF87874B-2B50-4ADF-8008-194CCD6CBB31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA686E1C-21CD-4936-8955-E32D9B986B65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA686E1C-21CD-4936-8955-E32D9B986B65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA686E1C-21CD-4936-8955-E32D9B986B65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA686E1C-21CD-4936-8955-E32D9B986B65}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {71E50342-4812-4261-991E-5C1DC5E14970}
+	EndGlobalSection
+EndGlobal
