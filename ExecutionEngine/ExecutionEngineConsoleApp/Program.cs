@@ -12,6 +12,7 @@ namespace ExecutionEngineConsoleApp
             var connectionString = "192.168.99.100"; 
             var port = 5672;
 
+            Console.WriteLine("Execution Engine");
             IMessageService messageService = new RabbitMqMessageService(connectionString, port);
             ExecutionEngine engine = new ExecutionEngine(messageService);
 

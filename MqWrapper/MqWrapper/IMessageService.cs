@@ -3,7 +3,7 @@ using MqService.Messages;
 
 namespace MqService
 {
-    public interface IMessageService
+    public interface IMessageService: IDisposable
     {
         void Publish(IMessage message);
 

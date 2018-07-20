@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using MqWrapper.Messages;
+﻿using MqService.Messages;
 using Newtonsoft.Json;
 
-namespace MqService.Messages
+namespace MqWrapper.Messages
 {
-    [MessageAttribute(ChannelName = "BasicMessage", IsBroadcast = false)]
-    public class BasicMessage : IMessage
+    public class AbstractMessage: IMessage
     {
         private Payload Payload { get; set; }
 

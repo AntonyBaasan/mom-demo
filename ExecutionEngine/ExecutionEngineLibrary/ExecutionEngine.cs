@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using MqService;
 using MqService.Messages;
+using MqWrapper.Messages;
 
 namespace ExecutionEngineLibrary
 {
@@ -14,12 +15,16 @@ namespace ExecutionEngineLibrary
         {
             _messageService = messageService;
 
-            _messageService.ListenMessage<BasicMessage>(OnMessageReceive);
+            _messageService.ListenMessage<ChatMessage>(OnChatReceived);
         }
 
-        public void OnMessageReceive()
+        public void OnChatReceived()
         {
+            Console.WriteLine("Got a chat message!");
+            var message = new ExecutionMessage();
+            message.SetContent("ExecutedObject1");
 
+            _messageService.Publish(message);
         }
     }
 }

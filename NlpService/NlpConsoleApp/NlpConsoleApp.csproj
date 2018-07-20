@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Program.cs~RFfc6ede1.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\MqWrapper\MqWrapper\MqWrapper.csproj" />
     <ProjectReference Include="..\..\MqWrapper\RabbitMqWrapper\RabbitMqWrapper.csproj" />
     <ProjectReference Include="..\NlpService\NlpLibrary.csproj" />
