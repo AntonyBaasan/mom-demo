@@ -12,10 +12,10 @@ namespace NlpConsoleApp
             var connectionString = "192.168.99.100";
             var port = 5672;
 
+            Console.WriteLine("NLP service");
             IMessageService messageService = new RabbitMqMessageService(connectionString, port);
             NlpService nlpService = new NlpService(messageService);
 
-            Console.WriteLine("NLP service");
             while (true)
             {
                 var inputString = Console.ReadLine();
