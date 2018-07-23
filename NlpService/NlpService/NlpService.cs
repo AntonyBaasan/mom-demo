@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using MqWrapper;
 using MqWrapper.Messages;
 
@@ -30,11 +31,14 @@ namespace NlpLibrary
         {
             //TODO: use SimpleParser or Chatbot to get FFO
             Intent intent = SendRequestToSimpleParserOrChatbot(text);
+            List<Intent> list = new List<Intent>();
+            list.Add(intent);
+            list.Add(intent);
 
             //IExecutionObject execObj = ParseIntentToExecutionObject(intent);
 
             var message = new ChatMessage();
-            message.SetContent(intent);
+            message.SetContent(list);
             _messageService.Publish(message);
         }
 

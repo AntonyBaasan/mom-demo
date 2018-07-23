@@ -21,7 +21,8 @@ namespace ExecutionEngineLibrary
 
         public void OnChatReceived(Payload payload)
         {
-            var intent = JsonConvert.DeserializeObject<Intent>(payload.ContentAsJson);
+            //var intent = JsonConvert.DeserializeObject<Intent>(payload.ContentAsJson);
+            List<Intent> list = JsonConvert.DeserializeObject<List<Intent>>(payload.ContentAsJson);
 
             Console.WriteLine("Got a chat message!");
             var message = new ExecutionMessage();
