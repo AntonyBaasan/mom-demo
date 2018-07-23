@@ -1,5 +1,4 @@
-﻿using MqService.Messages;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace MqWrapper.Messages
 {
@@ -16,7 +15,7 @@ namespace MqWrapper.Messages
         {
             Payload = new Payload
             {
-                TypeName = typeof(T).Name, 
+                TypeName = typeof(T).FullName, 
                 ContentAsJson = JsonConvert.SerializeObject(content)
             };
         }

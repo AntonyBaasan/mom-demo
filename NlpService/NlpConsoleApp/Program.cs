@@ -1,5 +1,5 @@
 ﻿using System;
-using MqService;
+using MqWrapper;
 using NlpLibrary;
 using RabbitMqService;
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using MqWrapper.Messages;
 
-namespace MqService.Messages
+namespace MqWrapper.Messages
 {
     public interface IMessage
     {

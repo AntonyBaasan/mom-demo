@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MqService.Messages
+namespace MqWrapper.Messages
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
     public class MessageAttribute : Attribute

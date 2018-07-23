@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Text;
-using System.Threading.Tasks;
-using MqService;
-using MqService.Messages;
+using MqWrapper;
 using MqWrapper.Messages;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
@@ -74,7 +72,7 @@ namespace RabbitMqService
                 body: jsonPayload);
         }
 
-        public void ListenMessage<T>(Action callback) where T : IMessage
+        public void ListenMessage<T>(Action<Payload> callback) where T : IMessage
         {
             MessageAttribute messageAttribute = GetMessageAttribute(typeof(T));
             if (messageAttribute == null)
@@ -92,7 +90,7 @@ namespace RabbitMqService
             }
         }
 
-        public void ListenRabbitMessage<T>(string channelName, bool durable, Action callback) where T : IMessage
+        public void ListenRabbitMessage<T>(string channelName, bool durable, Action<Payload> callback) where T : IMessage
         {
             _channel.QueueDeclare(queue: channelName,
                 durable: durable,
@@ -103,10 +101,9 @@ namespace RabbitMqService
             var consumer = new EventingBasicConsumer(_channel);
             consumer.Received += (model, ea) =>
             {
-                var body = ea.Body;
-                var message = Encoding.UTF8.GetString(body);
-                Console.WriteLine(" [x] Received {0}", message);
-                callback();
+                var messagePayload  = Encoding.UTF8.GetString(ea.Body);
+                var payload = JsonConvert.DeserializeObject<Payload>(messagePayload);
+                callback(payload);
             };
 
             String consumerTag = _channel.BasicConsume(queue: channelName,
@@ -128,5 +125,6 @@ namespace RabbitMqService
                 _connection = null;
             }
         }
+
     }
 }

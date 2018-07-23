@@ -1,6 +1,6 @@
 ﻿using System;
 using ExecutionEngineLibrary;
-using MqService;
+using MqWrapper;
 using RabbitMqService;
 
 namespace ExecutionEngineConsoleApp

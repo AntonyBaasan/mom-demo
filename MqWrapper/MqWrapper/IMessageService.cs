@@ -1,12 +1,12 @@
 ﻿using System;
-using MqService.Messages;
+using MqWrapper.Messages;
 
-namespace MqService
+namespace MqWrapper
 {
     public interface IMessageService: IDisposable
     {
         void Publish(IMessage message);
 
-        void ListenMessage<T>(Action callback) where T : IMessage;
+        void ListenMessage<T>(Action<Payload> callback) where T : IMessage;
     }
 }
