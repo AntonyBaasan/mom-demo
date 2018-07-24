@@ -3,5 +3,6 @@
     [Message(ChannelName = "ExecutionResult", IsBroadcast = false)]
     public class ExecutionMessage: AbstractMessage
     {
+        public string ResultText;
     }
 }

@@ -7,6 +7,6 @@ namespace MqWrapper
     {
         void Publish(IMessage message);
 
-        void ListenMessage<T>(Action<Payload> callback) where T : IMessage;
+        void ListenMessage<T>(Action<T> callback) where T : IMessage;
     }
 }

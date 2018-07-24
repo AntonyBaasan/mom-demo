@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MqWrapper;
+using MqWrapper.Domain;
 using MqWrapper.Messages;
 
 namespace NlpLibrary
@@ -22,9 +23,9 @@ namespace NlpLibrary
             _messageService.ListenMessage<ExecutionMessage>(OnExecutionResponse);
         }
 
-        private void OnExecutionResponse(Payload payload)
+        private void OnExecutionResponse(ExecutionMessage msg)
         {
-            Console.WriteLine("Got a exec result message!");
+            Console.WriteLine("Got a exec result message! ResultText=" + msg.ResultText);
         }
 
         public void SendText(string text)
@@ -38,7 +39,7 @@ namespace NlpLibrary
             //IExecutionObject execObj = ParseIntentToExecutionObject(intent);
 
             var message = new ChatMessage();
-            message.SetContent(list);
+            message.Intents = list;
             _messageService.Publish(message);
         }
 

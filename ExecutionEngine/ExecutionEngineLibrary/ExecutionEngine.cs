@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using MqWrapper;
+using MqWrapper.Domain;
 using MqWrapper.Messages;
-using Newtonsoft.Json;
-using NlpLibrary;
 
 namespace ExecutionEngineLibrary
 {
@@ -15,17 +13,16 @@ namespace ExecutionEngineLibrary
         public ExecutionEngine(IMessageService messageService)
         {
             _messageService = messageService;
-
             _messageService.ListenMessage<ChatMessage>(OnChatReceived);
         }
 
-        public void OnChatReceived(Payload payload)
+        public void OnChatReceived(ChatMessage msg)
         {
-            List<Intent> list = JsonConvert.DeserializeObject<List<Intent>>(payload.ContentAsJson);
+            List<Intent> list = msg.Intents;
 
-            Console.WriteLine("Got a chat message!");
+            Console.WriteLine($"Got a chat message with {list.Count} intenst(s)!");
             var message = new ExecutionMessage();
-            message.SetContent("ExecutedObject1");
+            message.ResultText = "ExecutedObject1";
             _messageService.Publish(message);
         }
     }

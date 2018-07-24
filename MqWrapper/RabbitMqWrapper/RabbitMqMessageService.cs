@@ -31,11 +31,11 @@ namespace RabbitMqService
 
             if (messageAttribute.IsBroadcast)
             {
-                BroadcastToRabbit(messageAttribute.ChannelName, messageAttribute.Durable, message.GetPayload());
+                BroadcastToRabbit(messageAttribute.ChannelName, messageAttribute.Durable, message);
             }
             else
             {
-                QueueToRabbit(messageAttribute.ChannelName, messageAttribute.Durable, message.GetPayload());
+                QueueToRabbit(messageAttribute.ChannelName, messageAttribute.Durable, message);
             }
         }
 
@@ -51,11 +51,11 @@ namespace RabbitMqService
             return null;
         }
 
-        private void BroadcastToRabbit(string queueName, bool durable, Payload payload)
+        private void BroadcastToRabbit(string queueName, bool durable, IMessage message)
         {
         }
 
-        private void QueueToRabbit(string queueName, bool durable, Payload payload)
+        private void QueueToRabbit(string queueName, bool durable, IMessage message)
         {
             _channel.QueueDeclare(queue: queueName,
                 durable: durable,
@@ -63,16 +63,16 @@ namespace RabbitMqService
                 autoDelete: false,
                 arguments: null);
 
-            string contentAsJsonString = JsonConvert.SerializeObject(payload);
-            var jsonPayload = Encoding.UTF8.GetBytes(contentAsJsonString);
+            string json = JsonConvert.SerializeObject(message);
+            var jsonAsString = Encoding.UTF8.GetBytes(json);
 
             _channel.BasicPublish(exchange: "",
                 routingKey: queueName,
                 basicProperties: null,
-                body: jsonPayload);
+                body: jsonAsString);
         }
 
-        public void ListenMessage<T>(Action<Payload> callback) where T : IMessage
+        public void ListenMessage<T>(Action<T> callback) where T : IMessage
         {
             MessageAttribute messageAttribute = GetMessageAttribute(typeof(T));
             if (messageAttribute == null)
@@ -90,7 +90,7 @@ namespace RabbitMqService
             }
         }
 
-        public void ListenRabbitMessage<T>(string channelName, bool durable, Action<Payload> callback) where T : IMessage
+        public void ListenRabbitMessage<T>(string channelName, bool durable, Action<T> callback) where T : IMessage
         {
             _channel.QueueDeclare(queue: channelName,
                 durable: durable,
@@ -102,8 +102,8 @@ namespace RabbitMqService
             consumer.Received += (model, ea) =>
             {
                 var messagePayload  = Encoding.UTF8.GetString(ea.Body);
-                var payload = JsonConvert.DeserializeObject<Payload>(messagePayload);
-                callback(payload);
+                var msg = JsonConvert.DeserializeObject<T>(messagePayload);
+                callback(msg);
             };
 
             String consumerTag = _channel.BasicConsume(queue: channelName,

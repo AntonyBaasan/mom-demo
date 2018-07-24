@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace NlpLibrary
+﻿namespace MqWrapper.Domain
 {
     public class Intent //fullfillment object
     {
