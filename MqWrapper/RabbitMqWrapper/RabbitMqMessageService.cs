@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using MqWrapper;
+using MqWrapper.Attributes;
 using MqWrapper.Messages;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
@@ -31,11 +32,11 @@ namespace RabbitMqService
 
             if (messageAttribute.IsBroadcast)
             {
-                BroadcastToRabbit(messageAttribute.ChannelName, messageAttribute.Durable, message);
+                BroadcastToRabbit(messageAttribute.GetType().FullName, messageAttribute.Durable, message);
             }
             else
             {
-                QueueToRabbit(messageAttribute.ChannelName, messageAttribute.Durable, message);
+                QueueToRabbit(messageAttribute.GetType().FullName, messageAttribute.Durable, message);
             }
         }
 
@@ -86,7 +87,7 @@ namespace RabbitMqService
             }
             else
             {
-                ListenRabbitMessage<T>(messageAttribute.ChannelName, messageAttribute.Durable, callback);
+                ListenRabbitMessage<T>(messageAttribute.GetType().FullName, messageAttribute.Durable, callback);
             }
         }
 

@@ -1,11 +1,10 @@
 ﻿using System;
 
-namespace MqWrapper.Messages
+namespace MqWrapper.Attributes
 {
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
     public class MessageAttribute : Attribute
     {
-        public string ChannelName { get; set; }
         public bool IsBroadcast { get; set; }
         /// <summary>
         /// Durable means the message will be saved on the disk, which 
@@ -13,5 +12,6 @@ namespace MqWrapper.Messages
         /// BUT, this will add more overhead (slower than non durable).
         /// </summary>
         public bool Durable { get; set; }
+
     }
 }

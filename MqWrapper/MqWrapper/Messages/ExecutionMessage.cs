@@ -1,6 +1,8 @@
-﻿namespace MqWrapper.Messages
+﻿using MqWrapper.Attributes;
+
+namespace MqWrapper.Messages
 {
-    [Message(ChannelName = "ExecutionResult", IsBroadcast = false)]
+    [Message(IsBroadcast = false)]
     public class ExecutionMessage: AbstractMessage
     {
         public string ResultText;
