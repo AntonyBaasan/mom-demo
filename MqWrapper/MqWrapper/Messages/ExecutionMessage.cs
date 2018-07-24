@@ -2,7 +2,7 @@
 
 namespace MqWrapper.Messages
 {
-    [Message(IsBroadcast = false)]
+    [DirectMessage]
     public class ExecutionMessage: AbstractMessage
     {
         public string ResultText;

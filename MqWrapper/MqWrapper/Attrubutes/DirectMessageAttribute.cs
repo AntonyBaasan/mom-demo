@@ -2,8 +2,8 @@
 
 namespace MqWrapper.Attributes
 {
-    [Message(IsBroadcast = false, Durable = false)]
-    public class DirectMessageAttribute : Attribute
+    public class DirectMessageAttribute : MessageAttribute
     {
+        public override bool IsBroadcast { get => false; }
     }
 }

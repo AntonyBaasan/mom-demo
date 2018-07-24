@@ -1,0 +1,7 @@
+﻿
+namespace RabbitMqWrapper
+{
+    interface IMessageProcessor
+    {
+    }
+}

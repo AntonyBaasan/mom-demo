@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Text;
 using MqWrapper;
 using MqWrapper.Attributes;
 using MqWrapper.Messages;
-using Newtonsoft.Json;
+using RabbitMqWrapper;
 using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
 
 namespace RabbitMqService
 {
@@ -14,29 +12,66 @@ namespace RabbitMqService
         private ConnectionFactory factory;
         private IConnection _connection;
         private IModel _channel;
+        private BroadcastMessageProcessor broadcastMessageProcessor;
+        private DirectMessageProcessor directMessageProcessor;
 
         public RabbitMqMessageService(string connection, int port)
         {
             factory = new ConnectionFactory() { HostName = connection, Port = port };
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();
+
+            broadcastMessageProcessor = new BroadcastMessageProcessor();
+            directMessageProcessor = new DirectMessageProcessor();
         }
 
         public void Publish(IMessage message)
         {
+            Publish(message, "");
+        }
+
+        public void Publish(IMessage message, string route)
+        {
             MessageAttribute messageAttribute = GetMessageAttribute(message.GetType());
-            if (messageAttribute == null)
-            {
-                throw new Exception("Can't publish a message with missing MessageAttribute!");
-            }
+            ValidateAttribute(messageAttribute);
+
 
             if (messageAttribute.IsBroadcast)
             {
-                BroadcastToRabbit(messageAttribute.GetType().FullName, messageAttribute.Durable, message);
+                broadcastMessageProcessor.Publish(_channel, message.GetType().FullName, messageAttribute.Durable, message, route);
             }
             else
             {
-                QueueToRabbit(messageAttribute.GetType().FullName, messageAttribute.Durable, message);
+                directMessageProcessor.Publish(_channel, message.GetType().FullName, messageAttribute.Durable, message);
+            }
+        }
+
+        public void ListenMessage<T>(Action<T> callback) where T : IMessage
+        {
+            ListenMessage(callback, new string[] { });
+        }
+
+        public void ListenMessage<T>(Action<T> callback, string[] routes) where T : IMessage
+        {
+            MessageAttribute messageAttribute = GetMessageAttribute(typeof(T));
+            ValidateAttribute(messageAttribute);
+
+            if (messageAttribute.IsBroadcast)
+            {
+                var broadcastAttribute = (BroadcastMessageAttribute)messageAttribute;
+                broadcastMessageProcessor.ListenRabbitMessage(_channel, typeof(T).FullName, messageAttribute.Durable, callback, routes, broadcastAttribute.Target);
+            }
+            else
+            {
+                directMessageProcessor.ListenRabbitMessage(_channel, typeof(T).FullName, messageAttribute.Durable, callback);
+            }
+        }
+
+        private void ValidateAttribute(MessageAttribute messageAttribute)
+        {
+            if (messageAttribute == null)
+            {
+                throw new Exception("Can't listen a message with missing MessageAttribute!");
             }
         }
 
@@ -52,69 +87,8 @@ namespace RabbitMqService
             return null;
         }
 
-        private void BroadcastToRabbit(string queueName, bool durable, IMessage message)
-        {
-        }
-
-        private void QueueToRabbit(string queueName, bool durable, IMessage message)
-        {
-            _channel.QueueDeclare(queue: queueName,
-                durable: durable,
-                exclusive: false,
-                autoDelete: false,
-                arguments: null);
-
-            string json = JsonConvert.SerializeObject(message);
-            var jsonAsString = Encoding.UTF8.GetBytes(json);
-
-            _channel.BasicPublish(exchange: "",
-                routingKey: queueName,
-                basicProperties: null,
-                body: jsonAsString);
-        }
-
-        public void ListenMessage<T>(Action<T> callback) where T : IMessage
-        {
-            MessageAttribute messageAttribute = GetMessageAttribute(typeof(T));
-            if (messageAttribute == null)
-            {
-                throw new Exception("Can't listen a message with missing MessageAttribute!");
-            }
-
-            if (messageAttribute.IsBroadcast)
-            {
-                //TODO: should it has to be different?
-            }
-            else
-            {
-                ListenRabbitMessage<T>(messageAttribute.GetType().FullName, messageAttribute.Durable, callback);
-            }
-        }
-
-        public void ListenRabbitMessage<T>(string channelName, bool durable, Action<T> callback) where T : IMessage
-        {
-            _channel.QueueDeclare(queue: channelName,
-                durable: durable,
-                exclusive: false,
-                autoDelete: false,
-                arguments: null);
-
-            var consumer = new EventingBasicConsumer(_channel);
-            consumer.Received += (model, ea) =>
-            {
-                var messagePayload  = Encoding.UTF8.GetString(ea.Body);
-                var msg = JsonConvert.DeserializeObject<T>(messagePayload);
-                callback(msg);
-            };
-
-            String consumerTag = _channel.BasicConsume(queue: channelName,
-                autoAck: true,
-                consumer: consumer);
-        }
-
         public void Dispose()
         {
-
             if (_channel != null)
             {
                 _channel.Dispose();
