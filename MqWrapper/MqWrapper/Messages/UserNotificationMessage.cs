@@ -7,7 +7,7 @@ namespace MqWrapper.Messages
     /// individual user channed. User ID will be set as route name
     /// </summary>
     [DirectMessage(RouteRequired = true)]
-    public class UserNotificationMessage
+    public class UserNotificationMessage: IMessage
     {
     }
 }

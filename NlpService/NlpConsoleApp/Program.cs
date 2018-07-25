@@ -1,5 +1,6 @@
 ﻿using System;
 using MqWrapper;
+using MqWrapper.Messages;
 using NlpLibrary;
 using RabbitMqService;
 
@@ -19,8 +20,10 @@ namespace NlpConsoleApp
             while (true)
             {
                 var inputString = Console.ReadLine();
-                nlpService.SendText(inputString);
-                Console.WriteLine("Sent a message: " + inputString);
+                //nlpService.SendText(inputString);
+                //Console.WriteLine("Sent a message: " + inputString);
+
+                messageService.Publish(new SystemControllerMessage(), inputString);
             }
         }
     }

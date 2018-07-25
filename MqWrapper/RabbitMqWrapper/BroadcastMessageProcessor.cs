@@ -33,9 +33,16 @@ namespace RabbitMqWrapper
         {
             channel.ExchangeDeclare(exchange: channelName, type: ExchangeType);
 
-            var queueName = target == BroadcastTarget.Instance ? channel.QueueDeclare().QueueName : channelName + GetApplicationName();
-
-            channel.QueueDeclare(queue: queueName, durable: durable, exclusive: false, autoDelete: false, arguments: null);
+            var queueName = "";
+            if (target == BroadcastTarget.Instance)
+            {
+                queueName = channel.QueueDeclare().QueueName;
+            }
+            else
+            {
+                queueName = channelName + "_" + GetApplicationName();
+                channel.QueueDeclare(queue: queueName, durable: durable, exclusive: false, autoDelete: false, arguments: null);
+            }
 
             if (routes.Length < 1)
             {
@@ -56,9 +63,7 @@ namespace RabbitMqWrapper
                 callback(msg);
             };
 
-            channel.BasicConsume(queue: queueName,
-                autoAck: true,
-                consumer: consumer);
+            channel.BasicConsume(queue: queueName, autoAck: true, consumer: consumer);
         }
 
         private string GetApplicationName()
