@@ -34,7 +34,7 @@ namespace RabbitMqWrapper
             channel.ExchangeDeclare(exchange: channelName, type: ExchangeType);
 
             var queueName = "";
-            if (target == BroadcastTarget.Instance)
+            if (target == BroadcastTarget.All)
             {
                 queueName = channel.QueueDeclare().QueueName;
             }

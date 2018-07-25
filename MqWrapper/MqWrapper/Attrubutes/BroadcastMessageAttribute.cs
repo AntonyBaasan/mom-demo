@@ -2,7 +2,7 @@
 {
     /// <summary>
     /// This enum is used for horizontal scaling.
-    /// Application - messages will be delivered one by one to duplicate applications round-robing way.
+    /// Application - messages will be delivered one by one to duplicate applications round-robing way.(NOTE: This selection can not be used with 'Route' variable)
     /// All - messages will be delivered to all intances of same application.
     /// </summary>
     public enum BroadcastTarget
@@ -14,6 +14,6 @@
     {
         public override bool IsBroadcast { get => true; }
 
-        public BroadcastTarget Target { get; set; } = BroadcastTarget.Application;
+        public BroadcastTarget Target { get; set; } = BroadcastTarget.All;
     }
 }

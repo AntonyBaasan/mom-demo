@@ -19,11 +19,22 @@ namespace NlpConsoleApp
 
             while (true)
             {
-                var inputString = Console.ReadLine();
-                //nlpService.SendText(inputString);
-                //Console.WriteLine("Sent a message: " + inputString);
+                try
+                {
+                    Console.WriteLine("Insert user name:");
+                    var userId = Console.ReadLine();
+                    Console.WriteLine("Insert text:");
+                    var text = Console.ReadLine();
+                    //nlpService.SendText(inputString);
+                    //Console.WriteLine("Sent a message: " + inputString);
 
-                messageService.Publish(new SystemControllerMessage(), inputString);
+                    messageService.Publish(new UserNotificationMessage{UserId=userId, Text=text}, userId);
+
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
         }
     }

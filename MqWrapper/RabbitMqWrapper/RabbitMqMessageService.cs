@@ -33,7 +33,7 @@ namespace RabbitMqService
         public void Publish(IMessage message, string route)
         {
             MessageAttribute messageAttribute = GetMessageAttribute(message.GetType());
-            ValidateAttribute(messageAttribute);
+            ValidateAttribute(messageAttribute, route);
 
 
             if (messageAttribute.IsBroadcast)
@@ -54,7 +54,7 @@ namespace RabbitMqService
         public void ListenMessage<T>(Action<T> callback, string[] routes) where T : IMessage
         {
             MessageAttribute messageAttribute = GetMessageAttribute(typeof(T));
-            ValidateAttribute(messageAttribute);
+            ValidateAttribute(messageAttribute, routes);
 
             if (messageAttribute.IsBroadcast)
             {
@@ -67,11 +67,30 @@ namespace RabbitMqService
             }
         }
 
-        private void ValidateAttribute(MessageAttribute messageAttribute)
+        private void ValidateAttribute(MessageAttribute messageAttribute, string route)
+        {
+            string[] routes = string.IsNullOrEmpty(route) ? null : new string[] { route };
+            ValidateAttribute(messageAttribute, routes);
+        }
+
+        private void ValidateAttribute(MessageAttribute messageAttribute, string[] route)
         {
             if (messageAttribute == null)
             {
-                throw new Exception("Can't listen a message with missing MessageAttribute!");
+                throw new Exception("MessageAttribute is missing!");
+            }
+            if (messageAttribute.IsBroadcast)
+            {
+                var broadcaseAttr = (BroadcastMessageAttribute)messageAttribute;
+                if (broadcaseAttr.RouteRequired == true && (route == null || route.Length == 0))
+                {
+                    throw new Exception($"Route information required for this type of message!");
+                }
+
+                if (broadcaseAttr.Target == BroadcastTarget.Application && !(route == null || route.Length == 0))
+                {
+                    throw new Exception($"Usage of 'Route' and 'BroadcastTarget.Application' will introduce not logical result!");
+                }
             }
         }
 

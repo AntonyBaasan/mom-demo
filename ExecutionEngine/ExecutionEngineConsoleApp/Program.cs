@@ -16,11 +16,13 @@ namespace ExecutionEngineConsoleApp
             Console.WriteLine("Execution Engine");
             IMessageService messageService = new RabbitMqMessageService(connectionString, port);
             ExecutionEngine engine = new ExecutionEngine(messageService);
-            var input = Console.ReadLine();
-            messageService.ListenMessage<SystemControllerMessage>((msg) =>
+
+            Console.WriteLine("Which user to listen:");
+            var userId = Console.ReadLine();
+            messageService.ListenMessage<UserNotificationMessage>((msg) =>
             {
-                Console.WriteLine("Got SystemControllerMessage!");
-            }, new string[] { input });
+                Console.WriteLine($"Got a message from {msg.UserId}, text: {msg.Text}");
+            }, new string[] { userId });
             Console.ReadKey();
 
         }
