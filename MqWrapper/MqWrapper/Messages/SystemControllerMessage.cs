@@ -2,7 +2,7 @@
 
 namespace MqWrapper.Messages
 {
-    [BroadcastMessage(Target = BroadcastTarget.Instance)]
+    [BroadcastMessage(Target = BroadcastTarget.All)]
     public class SystemControllerMessage: IMessage
     {
     }
